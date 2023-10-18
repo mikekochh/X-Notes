@@ -1,0 +1,11 @@
+{
+    "name": "X Notes",
+    "version": "1.0.0",
+    "description": "An extension to write notes while using X",
+    "manifest_version": 3,
+    "author": "Michael Koch",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "X Notes"
+    }
+}
