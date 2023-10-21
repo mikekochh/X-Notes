@@ -1,0 +1,13 @@
+.logo {
+    left: 0px;
+    top: 0px;
+    
+}
+
+.App-logo-light {
+    border: 1px solid black;
+}
+
+.App-logo-dark {
+    border: 1px solid white;
+}   

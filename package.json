@@ -15,7 +15,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "git": "git add . && git commit -m ",
+    "postgit": "git push --all"
   },
   "eslintConfig": {
     "extends": [
@@ -36,6 +38,13 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^8.51.0"
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.51.0",
+    "html-webpack-plugin": "^5.5.3",
+    "tailwindcss": "^3.3.3",
+    "ts-node": "^10.9.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }
