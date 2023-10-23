@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import blackLogo from '../assets/images/blackLogo.jpg';
-import darkLogo from '../assets/images/darkLogo.png';
-import lightLogo from '../assets/images/lightLogo.png';
-import './index.css';
+import darkLogo from '../../assets/images/darkLogo.png';
+import lightLogo from '../../assets/images/lightLogo.png';
+import './Header.css';
+import { useContext } from 'react';
+import { BaseContext } from '../../context/Firebase/BaseContext';
+import { AuthContext } from '../../context/AuthContext/AuthContext';
 
 const Header = ({ theme, setTheme }) => {
 
 
     const [logo, setLogo] = useState();
+
+    if (localStorage.getItem('theme')) {
+        setTheme(localStorage.getItem('theme'));
+    }
+    else {
+        setTheme('dark');
+        localStorage.setItem('theme', 'dark');
+    }
 
     useEffect(() => {
         if (theme === 'dark') {
@@ -35,6 +45,10 @@ const Header = ({ theme, setTheme }) => {
         }
     }
 
+    const changeTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light');
+        localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
+    }
 
     return (
         <div className="Header">
@@ -43,8 +57,9 @@ const Header = ({ theme, setTheme }) => {
                     <p className="text-2xl text-center flex-grow mt-3">X Notes</p>
                 </div>
                 <div className="logo w-10 absolute m-2 cursor-pointer">
-                    <img src={logo} className={`App-logo-${theme} rounded-lg`} alt="logo" onMouseEnter={highlightLogo} onMouseLeave={unhighlightLogo} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} />
+                    <img src={logo} className={`App-logo-${theme} rounded-lg`} alt="logo" onMouseEnter={highlightLogo} onMouseLeave={unhighlightLogo} onClick={() => changeTheme()} />
                 </div>
+                <div className="profilePic absolute right-0 m-2">Hey</div>
             </header>
         </div>
     );

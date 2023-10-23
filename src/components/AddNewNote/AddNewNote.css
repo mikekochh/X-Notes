@@ -1,0 +1,23 @@
+.AddNewNote-dark {
+    border: 1px solid white;
+}
+
+.AddNewNote-dark-hover {
+    background-color: #000065;
+}
+
+.AddNewNote-light {
+    border: 1px solid black;
+}
+
+.AddNewNote-light-hover {
+    background-color: #E0E8FF;
+}
+
+.PlusButton-dark {
+    border: 1px solid white;
+}
+
+.PlusButton-light {
+    border: 1px solid black;
+}

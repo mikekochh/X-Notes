@@ -1,7 +1,6 @@
 .logo {
     left: 0px;
     top: 0px;
-    
 }
 
 .App-logo-light {
@@ -11,3 +10,8 @@
 .App-logo-dark {
     border: 1px solid white;
 }   
+
+.profilePic {
+    right: 0px;
+    top: 0px;
+}
