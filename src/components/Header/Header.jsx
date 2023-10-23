@@ -51,7 +51,7 @@ const Header = ({ theme, setTheme }) => {
     }
 
     return (
-        <div className="Header">
+        <div className="Header relative">
             <header className="App-header">
                 <div className="flex items-center">
                     <p className="text-2xl text-center flex-grow mt-3">X Notes</p>
@@ -59,7 +59,7 @@ const Header = ({ theme, setTheme }) => {
                 <div className="logo w-10 absolute m-2 cursor-pointer">
                     <img src={logo} className={`App-logo-${theme} rounded-lg`} alt="logo" onMouseEnter={highlightLogo} onMouseLeave={unhighlightLogo} onClick={() => changeTheme()} />
                 </div>
-                <div className="profilePic absolute right-0 m-2">Hey</div>
+                <div className="profilePic right-0 m-2">Hey</div>
             </header>
         </div>
     );
