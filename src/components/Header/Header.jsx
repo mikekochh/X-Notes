@@ -3,11 +3,13 @@ import darkLogo from '../../assets/images/darkLogo.png';
 import lightLogo from '../../assets/images/lightLogo.png';
 import './Header.css';
 import { useContext } from 'react';
-import { BaseContext } from '../../context/Firebase/BaseContext';
 import { AuthContext } from '../../context/AuthContext/AuthContext';
 
 const Header = ({ theme, setTheme }) => {
 
+    const user = useContext(AuthContext);
+
+    const userPhoto = user ? user.photoURL : '';
 
     const [logo, setLogo] = useState();
 
@@ -59,7 +61,9 @@ const Header = ({ theme, setTheme }) => {
                 <div className="logo w-10 absolute m-2 cursor-pointer">
                     <img src={logo} className={`App-logo-${theme} rounded-lg`} alt="logo" onMouseEnter={highlightLogo} onMouseLeave={unhighlightLogo} onClick={() => changeTheme()} />
                 </div>
-                <div className="profilePic right-0 m-2">Hey</div>
+                <div className="right-0 m-2 absolute top-0">
+                    {user ? <img src={`${userPhoto}`} className="profilePic w-10 h-10 rounded-full" alt="profile pic" /> : ""}
+                </div>
             </header>
         </div>
     );

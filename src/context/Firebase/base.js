@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAsnA9j40lfzGrIHXLNPuoXKzSO1p30uVM",
@@ -24,6 +25,29 @@ class Firebase {
             }).catch((error) => {
                 console.log('error: ', error);
             });
+    }
+
+    signUserOut = async() => {
+        await auth.signOut();
+    }
+
+    getFirestore = () => {
+        return getFirestore(app);
+    }
+
+    getCollection = async (firestore, collectionName) => {
+        const collectionRef = collection(firestore, collectionName);
+        const snapshot = await getDocs(collectionRef);
+
+        const data = [];
+
+        snapshot.forEach((doc) => {
+            data.push(doc.data());
+        });
+
+        console.log("data from getCollection: ", data);
+        
+        return data;
     }
 }
 

@@ -6,6 +6,8 @@ import MainPage from './components/MainPage/MainPage';
 function App() {
   const [theme, setTheme] = useState('dark');
 
+  console.log("App");
+
   return (
     <div className={`App theme-${theme}`}>
       <Header theme={theme} setTheme={setTheme} />

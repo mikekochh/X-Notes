@@ -12,6 +12,5 @@
 }   
 
 .profilePic {
-    right: 0px;
-    top: 0px;
+    border-radius: 9999px;
 }
