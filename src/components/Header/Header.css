@@ -14,3 +14,17 @@
 .profilePic {
     border-radius: 9999px;
 }
+
+.App-header-dark {
+    background-color: #282c34;
+    min-height: 10vh;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-header-light {
+    background-color: #E0E8FF;
+    min-height: 10vh;
+    font-size: calc(10px + 2vmin);
+    color: black;
+}

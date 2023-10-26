@@ -1,3 +1,7 @@
-.SignInButton {
+.SignInButton-light {
     border: 1px solid #000;
+}
+
+.SignInButton-dark {
+    border: 1px solid #fff;
 }

@@ -11,12 +11,13 @@ const SignIn = () => {
 
     async function signIn () {
         await firebase.signUserIn();
-
     }
+
+    const theme = localStorage.getItem('theme');
 
     return (
         <div className="SignIn">
-            <button className="SignInButton pl-1 pr-1 rounded-md" onClick={signIn}>Sign Into <FontAwesomeIcon icon={faXTwitter} className="SignInIcon" /></button>
+            <button className={`SignInButton-${theme} p-1 pl-2 pr-2 rounded-md`} onClick={signIn}>Sign Into <FontAwesomeIcon icon={faXTwitter} className="SignInIcon" /></button>
         </div>
     );
 }

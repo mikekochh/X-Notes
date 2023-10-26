@@ -4,10 +4,12 @@ import lightLogo from '../../assets/images/lightLogo.png';
 import './Header.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext/AuthContext';
+import { BaseContext } from '../../context/Firebase/BaseContext';
 
 const Header = ({ theme, setTheme }) => {
 
     const user = useContext(AuthContext);
+    const firebase = useContext(BaseContext);
 
     const userPhoto = user ? user.photoURL : '';
 
@@ -52,9 +54,13 @@ const Header = ({ theme, setTheme }) => {
         localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
     }
 
+    async function signOut () {
+        await firebase.signUserOut();
+    }
+
     return (
-        <div className="Header relative">
-            <header className="App-header">
+        <div className="Header relative mb-3">
+            <header className={`App-header-${theme}`}>
                 <div className="flex items-center">
                     <p className="text-2xl text-center flex-grow mt-3">X Notes</p>
                 </div>
@@ -62,7 +68,7 @@ const Header = ({ theme, setTheme }) => {
                     <img src={logo} className={`App-logo-${theme} rounded-lg`} alt="logo" onMouseEnter={highlightLogo} onMouseLeave={unhighlightLogo} onClick={() => changeTheme()} />
                 </div>
                 <div className="right-0 m-2 absolute top-0">
-                    {user ? <img src={`${userPhoto}`} className="profilePic w-10 h-10 rounded-full" alt="profile pic" /> : ""}
+                    {user ? <img src={`${userPhoto}`} className="profilePic w-10 h-10 rounded-full cursor-pointer" alt="profile pic" onClick={signOut} /> : ""}
                 </div>
             </header>
         </div>
