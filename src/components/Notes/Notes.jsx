@@ -26,6 +26,7 @@ const Notes = () => {
         }
 
         async function fetchDisplayName() {
+            console.log('fetchDisplayName');
             try {
                 const displayName = await firebase.getDisplayName();
                 setDisplayName(displayName);

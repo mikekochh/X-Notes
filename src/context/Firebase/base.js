@@ -18,9 +18,7 @@ const auth = getAuth(app);
 class Firebase {
 
     constructor() {
-        console.log("How many times is this running?");
-        this.userID = '';
-        this.displayName = '';
+        this.auth = auth;
     }
 
     signUserIn = async() => {
@@ -65,6 +63,15 @@ class Firebase {
         }
     }
 
+    getCurrentUser = async () => {
+        return new Promise((resolve, reject) => {
+            const unsubscribe = auth.onAuthStateChanged(user => {
+                unsubscribe();
+                resolve(user);
+            }, reject);
+        });
+    }
+
 
     getCollection = async (firestore, collectionName) => {
         const collectionRef = collection(firestore, collectionName);
@@ -82,7 +89,7 @@ class Firebase {
     }
 
     getUserID = () => {
-        return this.userID;
+        return this.getCurrentUser();
     }
 
     getDisplayName = () => {

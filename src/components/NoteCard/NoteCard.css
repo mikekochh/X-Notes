@@ -1,0 +1,7 @@
+.NoteCard-light {
+    border: 1px solid black;
+}
+
+.NoteCard-dark {
+    border: 1px solid white;
+}
