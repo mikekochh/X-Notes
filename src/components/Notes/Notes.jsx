@@ -16,7 +16,10 @@ const Notes = () => {
         async function fetchNotes() {
             try {
                 const notesData = await firebase.getCollection(ref, 'notes');
-                setNotes(notesData);
+                console.log('notesData: ', notesData);
+                if (notesData) {
+                    setNotes(notesData);
+                }
             } catch (error) {
                 console.log('error: ', error);
             }
@@ -42,7 +45,7 @@ const Notes = () => {
             </div>
             <div className="Notes">
                 {notes.length ? notes.map((note) => (
-                    <NoteCard key={note.noteID} note={note.note} title={note.title} />
+                    <NoteCard note={note.noteContent} title={note.noteTitle} />
                 )) : null}
             </div>
             <AddNewNote />

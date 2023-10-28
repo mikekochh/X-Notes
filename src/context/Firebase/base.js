@@ -51,19 +51,14 @@ class Firebase {
         });
     }
 
-    addNewDocument = async (firestore, collectionName, documentName, documentContent) => {
+    addNewDocument = async (firestore, collectionName, documentContent) => {
         try {
             const collectionRef = collection(firestore, collectionName);
 
-            console.log('collectionRef: ', collectionRef);
-            console.log('documentName: ', documentName);
-
             await addDoc(collectionRef, {
-                [documentName]: {
-                    noteContent: documentContent.content,
-                    noteTitle: documentContent.title,
-                    userID: documentContent.userID
-                }
+                noteContent: documentContent.content,
+                noteTitle: documentContent.title,
+                userID: documentContent.userID
             });
         } catch (error) {   
             console.log('error: ', error);
@@ -87,7 +82,6 @@ class Firebase {
     }
 
     getUserID = () => {
-        console.log("user ID: ", this.userID);
         return this.userID;
     }
 

@@ -13,8 +13,9 @@ const AddNewNoteInput = ({ setNewNoteScreenVisible }) => {
     const saveNewNote = () => {
         const newNoteTitle = document.getElementById("newNoteTitle").value;
         const newNoteContent = document.getElementById("newNoteContent").value;
-        const documentContent = {title: newNoteTitle, content: newNoteContent, userID: "testing"};
-        firebase.addNewDocument(ref, 'notes', 'new note', documentContent);
+        const userID = firebase.getUserID();
+        const documentContent = {title: newNoteTitle, content: newNoteContent, userID: userID};
+        firebase.addNewDocument(ref, 'notes', documentContent);
         setNewNoteScreenVisible(false);
     }
 
