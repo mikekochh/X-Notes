@@ -10,6 +10,8 @@ const Notes = () => {
 
     const [notes, setNotes] = useState([]);
 
+    const [displayName, setDisplayName] = useState(null);
+
     useEffect(() => {
         async function fetchNotes() {
             try {
@@ -20,13 +22,24 @@ const Notes = () => {
             }
         }
 
-        fetchNotes();
-    }, [firebase, ref]);
+        async function fetchDisplayName() {
+            try {
+                const displayName = await firebase.getDisplayName();
+                setDisplayName(displayName);
+            } catch (error) {
+                console.log('error: ', error);
+            }
+        }
 
-    console.log('notes: ', notes);
+        fetchNotes();
+        fetchDisplayName();
+    }, [firebase, ref]);
 
     return (
         <div>
+            <div>
+                <h1>{displayName}'s Notes</h1>
+            </div>
             <div className="Notes">
                 {notes.length ? notes.map((note) => (
                     <NoteCard key={note.noteID} note={note.note} title={note.title} />

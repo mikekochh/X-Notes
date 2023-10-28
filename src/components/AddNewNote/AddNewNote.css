@@ -21,3 +21,26 @@
 .PlusButton-light {
     border: 1px solid black;
 }
+
+.NewNoteScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 350px;
+    height: 566px;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background */
+    z-index: 1000;
+}
+
+.SaveNewNote-dark {
+    border: 1px solid white;
+}
+
+.SaveNewNote-light {
+    border: 1px solid black;
+}
+
+.AddNewNoteInput {
+    z-index: 1001;
+}
