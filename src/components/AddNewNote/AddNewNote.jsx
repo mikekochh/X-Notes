@@ -3,21 +3,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import './AddNewNote.css';
 import { BaseContext } from "../../context/Firebase/BaseContext";    
+import { v4 as uuid } from 'uuid';
 
-const AddNewNoteInput = ({ setNewNoteScreenVisible }) => {
+const AddNewNoteInput = ({ setNewNoteScreenVisible, addNote }) => {
 
     const theme = localStorage.getItem('theme');
     const firebase = useContext(BaseContext);
     const ref = firebase.getFirestore();
 
+    const getUserIDFunction = async () => {
+        return await firebase.getUserID();
+    }
+
     const saveNewNote = () => {
         const newNoteTitle = document.getElementById("newNoteTitle").value;
         const newNoteContent = document.getElementById("newNoteContent").value;
-        const userID = firebase.getUserID();
-        console.log('userID: ', userID);
-        const documentContent = {title: newNoteTitle, content: newNoteContent, userID: userID};
+        // const userID = getUserIDFunction();
+        const unique_id = uuid();
+
+        // console.log('userID: ', userID);
+        const documentContent = {title: newNoteTitle, content: newNoteContent, userID: "testing", noteID: unique_id};
         firebase.addNewDocument(ref, 'notes', documentContent);
         setNewNoteScreenVisible(false);
+        addNote();
     }
 
     return (
@@ -33,7 +41,7 @@ const AddNewNoteInput = ({ setNewNoteScreenVisible }) => {
 }
 
 
-const AddNewNote = () => {
+const AddNewNote = ({ addNote }) => {
 
     const theme = localStorage.getItem('theme');
     const [newNoteScreenVisible, setNewNoteScreenVisible] = useState(false);
@@ -63,7 +71,7 @@ const AddNewNote = () => {
             {/* <div className={`AddNewNote-${theme} m-2 mt-4 rounded-2xl flex justify-center items-center cursor-pointer`} onMouseEnter={highlightButton} onMouseLeave={unhighlightButton}> */}
             <FontAwesomeIcon icon={faPlus} className={`text-2xl PlusButton-${theme} w-4 h-4 rounded-2xl p-1 m-2 mr-3`} />
             <p>Add New Note</p>
-            {newNoteScreenVisible ? <div className="NewNoteScreen"><AddNewNoteInput setNewNoteScreenVisible={setNewNoteScreenVisible} /></div> : ""}
+            {newNoteScreenVisible ? <div className="NewNoteScreen"><AddNewNoteInput setNewNoteScreenVisible={setNewNoteScreenVisible} addNote={addNote} /></div> : ""}
         </div>
     );
 }

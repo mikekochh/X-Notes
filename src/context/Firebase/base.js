@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAsnA9j40lfzGrIHXLNPuoXKzSO1p30uVM",
@@ -50,13 +50,15 @@ class Firebase {
     }
 
     addNewDocument = async (firestore, collectionName, documentContent) => {
+        console.log("is this running?");
         try {
             const collectionRef = collection(firestore, collectionName);
 
             await addDoc(collectionRef, {
                 noteContent: documentContent.content,
                 noteTitle: documentContent.title,
-                userID: documentContent.userID
+                userID: documentContent.userID,
+                noteID: documentContent.noteID
             });
         } catch (error) {   
             console.log('error: ', error);
@@ -69,6 +71,17 @@ class Firebase {
                 unsubscribe();
                 resolve(user);
             }, reject);
+        });
+    }
+
+    deleteNote = async (firestore, collectionName, noteID) => {
+        const collectionRef = collection(firestore, collectionName);
+        const snapshot = await getDocs(collectionRef);
+
+        snapshot.forEach((doc) => {
+            if (doc.data().noteID === noteID) {
+                deleteDoc(doc.ref);
+            }
         });
     }
 

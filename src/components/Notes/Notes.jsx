@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import AddNewNote from "../AddNewNote/AddNewNote";
 import { BaseContext } from "../../context/Firebase/BaseContext";
 import NoteCard from "../NoteCard/NoteCard";
+import "./Notes.css";
 
 const Notes = () => {
 
@@ -12,11 +13,20 @@ const Notes = () => {
 
     const [displayName, setDisplayName] = useState(null);
 
+    const deleteNote = (noteID) => {
+        const updatedNotes = notes.filter((note) => note.noteID !== noteID);
+        setNotes(updatedNotes);
+    }
+
+    const addNote = (note) => {
+        const updatedNotes = [...notes, note];
+        setNotes(updatedNotes);
+    }
+
     useEffect(() => {
         async function fetchNotes() {
             try {
                 const notesData = await firebase.getCollection(ref, 'notes');
-                console.log('notesData: ', notesData);
                 if (notesData) {
                     setNotes(notesData);
                 }
@@ -26,7 +36,6 @@ const Notes = () => {
         }
 
         async function fetchDisplayName() {
-            console.log('fetchDisplayName');
             try {
                 const displayName = await firebase.getDisplayName();
                 setDisplayName(displayName);
@@ -40,19 +49,23 @@ const Notes = () => {
     }, [firebase, ref]);
 
     return (
-        <div>
+        <div className="MainPage">
             <div>
                 <h1>{displayName}'s Notes</h1>
             </div>
-            <div className="Notes">
-                {notes.length ? notes.map((note) => (
-                    <NoteCard note={note.noteContent} title={note.noteTitle} />
-                )) : null}
+            <div className="NotesContainer">
+                <div className="Notes">
+                    {notes.length ? notes.map((note) => (
+                        <NoteCard 
+                            note={note.noteContent} 
+                            title={note.noteTitle} 
+                            noteID={note.noteID}
+                            onDelete={deleteNote} />
+                    )) : null}
+                </div>
             </div>
-            <AddNewNote />
+            <AddNewNote addNote={addNote} />
         </div>
-
-
     )
 
 }

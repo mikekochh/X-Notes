@@ -1,0 +1,4 @@
+.NotesContainer {
+    max-height: 300px; /* Set a max height to determine when scrolling should appear */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  }
