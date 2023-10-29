@@ -5,15 +5,14 @@ import MainPage from './components/MainPage/MainPage';
 import Settings from './components/Settings/Settings';
 
 function App() {
-  const [theme, setTheme] = useState('dark');
-
-  console.log("App");
+  
+  const [theme, setTheme] = useState('light');
 
   return (
     <div className={`App theme-${theme} relative`}>
       <Header theme={theme} setTheme={setTheme} />
       <MainPage />
-      <Settings />
+      <Settings theme={theme} setTheme={setTheme} />
     </div>
   );
 }

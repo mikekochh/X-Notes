@@ -95,6 +95,15 @@ class Firebase {
     getDisplayName = () => {
         return this.displayName;
     }
+
+    isUserSignedIn = () => {
+        return new Promise((resolve) => {
+            const unsubscribe = auth.onAuthStateChanged((user) => {
+                unsubscribe();
+                resolve(!!user);
+            });
+        });
+    }
 }
 
 export default Firebase;
