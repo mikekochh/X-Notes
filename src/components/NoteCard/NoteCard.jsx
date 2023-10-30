@@ -17,8 +17,8 @@ const NoteCard = ({ title, note, noteID, onDelete }) => {
         onDelete(noteID);
     }
 
-    const postTweet = () => {
-        console.log('Post Tweet');
+    const postTweet = async () => {
+        await firebase.postTweet();
     }
 
     return (

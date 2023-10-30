@@ -19,7 +19,9 @@ const Notes = () => {
     }
 
     const addNote = (note) => {
+        console.log("addNote note: ", note);
         const updatedNotes = [...notes, note];
+        console.log("updatedNotes: ", updatedNotes);
         setNotes(updatedNotes);
     }
 

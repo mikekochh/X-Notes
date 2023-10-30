@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { getFirestore, collection, getDocs, addDoc, deleteDoc } from "firebase/firestore";
+// import { Client, auth } from " twitter-api-sdk";
+// import { TwitterApi } from "twitter-api-v2";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAsnA9j40lfzGrIHXLNPuoXKzSO1p30uVM",
@@ -12,18 +14,19 @@ const firebaseConfig = {
     measurementId: "G-B238T1KGWQ"
 };
 
+
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const firebaseAuth = getAuth(app);
 
 class Firebase {
 
     constructor() {
-        this.auth = auth;
+        this.firebaseAuth = firebaseAuth;
     }
 
     signUserIn = async() => {
         const provider = new TwitterAuthProvider();
-        await signInWithPopup(auth, provider)
+        await signInWithPopup(firebaseAuth, provider)
             .then((result) => {
                 this.userID = result.user.uid;
                 this.displayName = result.user.displayName;
@@ -33,7 +36,7 @@ class Firebase {
     }
 
     signUserOut = async() => {
-        await auth.signOut();
+        await firebaseAuth.signOut();
     }
 
     getFirestore = () => {
@@ -49,14 +52,17 @@ class Firebase {
         });
     }
 
+    postTweet = async () => {
+        console.log('Post Tweet');
+    }
+
     addNewDocument = async (firestore, collectionName, documentContent) => {
-        console.log("is this running?");
         try {
             const collectionRef = collection(firestore, collectionName);
 
             await addDoc(collectionRef, {
-                noteContent: documentContent.content,
-                noteTitle: documentContent.title,
+                noteContent: documentContent.noteContent,
+                noteTitle: documentContent.noteTitle,
                 userID: documentContent.userID,
                 noteID: documentContent.noteID
             });
@@ -65,13 +71,28 @@ class Firebase {
         }
     }
 
-    getCurrentUser = async () => {
+    getCurrentUser = async (retrieveID) => {
         return new Promise((resolve, reject) => {
-            const unsubscribe = auth.onAuthStateChanged(user => {
+            const unsubscribe = firebaseAuth.onAuthStateChanged(user => {
                 unsubscribe();
-                resolve(user);
+                if (retrieveID) {
+                    resolve(user.uid);
+                }
+                else {
+                    resolve(user.displayName);
+                }
+                
             }, reject);
         });
+    }
+
+    // TODO: dont think this is needed
+    getUserID = () => {
+        return this.getCurrentUser(true);
+    }
+
+    getDisplayName = () => {
+        return this.getCurrentUser(false);
     }
 
     deleteNote = async (firestore, collectionName, noteID) => {
@@ -89,29 +110,22 @@ class Firebase {
     getCollection = async (firestore, collectionName) => {
         const collectionRef = collection(firestore, collectionName);
         const snapshot = await getDocs(collectionRef);
-
-        console.log('snapshot: ', snapshot);
+        const userID = await this.getCurrentUser(true);
 
         const data = [];
 
         snapshot.forEach((doc) => {
-            data.push(doc.data());
+            if (doc.data().userID === userID) {
+               data.push(doc.data());
+            }
         });
         
         return data;
     }
 
-    getUserID = () => {
-        return this.getCurrentUser();
-    }
-
-    getDisplayName = () => {
-        return this.displayName;
-    }
-
     isUserSignedIn = () => {
         return new Promise((resolve) => {
-            const unsubscribe = auth.onAuthStateChanged((user) => {
+            const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
                 unsubscribe();
                 resolve(!!user);
             });

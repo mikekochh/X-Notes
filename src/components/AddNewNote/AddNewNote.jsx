@@ -15,17 +15,16 @@ const AddNewNoteInput = ({ setNewNoteScreenVisible, addNote }) => {
         return await firebase.getUserID();
     }
 
-    const saveNewNote = () => {
+    const saveNewNote = async () => {
         const newNoteTitle = document.getElementById("newNoteTitle").value;
         const newNoteContent = document.getElementById("newNoteContent").value;
-        // const userID = getUserIDFunction();
+        const userID = await getUserIDFunction();
         const unique_id = uuid();
 
-        // console.log('userID: ', userID);
-        const documentContent = {title: newNoteTitle, content: newNoteContent, userID: "testing", noteID: unique_id};
+        const documentContent = {noteTitle: newNoteTitle, noteContent: newNoteContent, userID: userID, noteID: unique_id};
         firebase.addNewDocument(ref, 'notes', documentContent);
         setNewNoteScreenVisible(false);
-        addNote();
+        addNote(documentContent);
     }
 
     return (
