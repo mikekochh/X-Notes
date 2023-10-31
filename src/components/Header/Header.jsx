@@ -12,6 +12,19 @@ const Header = ({ theme, setTheme }) => {
 
     const userPhoto = user ? user.photoURL : '';
 
+    const [backendData, setBackendData] = useState([{}]);
+
+    useEffect(() => {
+        fetch("/api").then(
+            response => response.json()
+        ).then(
+            data => {
+                setBackendData(data);
+                console.log("data: ", data);
+            }       
+        )
+    }, []);
+
     const [logo, setLogo] = useState();
 
     if (localStorage.getItem('theme')) {
