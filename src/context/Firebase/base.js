@@ -55,10 +55,6 @@ class Firebase {
         });
     }
 
-    postTweet = async () => {
-        console.log('Post Tweet');
-    }
-
     addNewDocument = async (firestore, collectionName, documentContent) => {
         try {
             const collectionRef = collection(firestore, collectionName);
