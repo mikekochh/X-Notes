@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { getFirestore, collection, getDocs, addDoc, deleteDoc } from "firebase/firestore";
+import { tweet } from "../../functions/tweetFunctions";
 // import { Client, auth } from " twitter-api-sdk";
 // import { TwitterApi } from "twitter-api-v2";
 
@@ -26,6 +27,8 @@ class Firebase {
 
     signUserIn = async() => {
         const provider = new TwitterAuthProvider();
+        console.log('provider: ', provider);
+        console.log('firebaseAuth: ', firebaseAuth);
         await signInWithPopup(firebaseAuth, provider)
             .then((result) => {
                 this.userID = result.user.uid;
